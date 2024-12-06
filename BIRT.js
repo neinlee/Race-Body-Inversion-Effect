@@ -499,7 +499,7 @@ function trialRoutineBegin(snapshot) {
     routineTimer.add(4.000000);
     trialMaxDurationReached = false;
     // update component parameters for each repeat
-    body.setOri(180 if 'I' in condition else 0);
+    body.setOri(condition.includes('I') ? 180 : 0);
     body.setImage(WMfileName);
     psychoJS.experiment.addData('trial.started', globalClock.getTime());
     trialMaxDuration = null
@@ -741,7 +741,7 @@ function recognitionRoutineBegin(snapshot) {
     routineTimer.add(5.000000);
     recognitionMaxDurationReached = false;
     // update component parameters for each repeat
-    image.setOri(180 if 'I' in condition else 0);
+    image.setOri(condition.includes('I') ? 180 : 0);
     image.setImage(WMfileName);
     key_resp.keys = undefined;
     key_resp.rt = undefined;
