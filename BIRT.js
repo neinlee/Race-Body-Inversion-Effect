@@ -17,7 +17,10 @@ let expInfo = {
     'participant': `${util.pad(Number.parseFloat(util.randint(0, 999999)).toFixed(0), 6)}`,
     'session': '001',
 };
-
+// Global initialization for currentLoop to prevent undefined errors
+if (typeof currentLoop === 'undefined') {
+    currentLoop = null;
+}
 // Start code blocks for 'Before Experiment'
 // init psychoJS:
 const psychoJS = new PsychoJS({
@@ -50,7 +53,7 @@ flowScheduler.add(introRoutineBegin());
 flowScheduler.add(introRoutineEachFrame());
 flowScheduler.add(introRoutineEnd());
 const study_phaseLoopScheduler = new Scheduler(psychoJS);
-flowScheduler.add(study_phaseLoopBegin(study_phaseLoopScheduler));
+flowScheduler.add(recognition_phase(study_phaseLoopScheduler));
 flowScheduler.add(study_phaseLoopScheduler);
 flowScheduler.add(study_phaseLoopEnd);
 
@@ -366,7 +369,7 @@ function introRoutineEnd(snapshot) {
   }
 }
 
-function study_phaseLoopBegin(study_phaseLoopScheduler, snapshot) {
+function import_conditions(study_phaseLoopScheduler, snapshot) {
   return async function() {
     TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
     
@@ -378,6 +381,10 @@ function study_phaseLoopBegin(study_phaseLoopScheduler, snapshot) {
       trialList: 'condition.csv',
       seed: undefined, name: 'study_phase'
     });
+    // Ensure currentLoop is defined and assigned
+    if (typeof currentLoop === 'undefined') {
+            currentLoop = study_phase; // Assign currentLoop to study_phase
+    }
     psychoJS.experiment.addLoop(study_phase); // add the loop to the experiment
     currentLoop = study_phase;  // we're now the current loop
     
@@ -1129,6 +1136,7 @@ function EndRoutineEnd(snapshot) {
 
 function importConditions(currentLoop) {
   return async function () {
+    console.log('Current Loop:', currentLoop);
     psychoJS.importAttributes(currentLoop.getCurrentTrial());
     return Scheduler.Event.NEXT;
     };
