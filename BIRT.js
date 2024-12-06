@@ -38,7 +38,6 @@ psychoJS.schedule(psychoJS.gui.DlgFromDict({
   dictionary: expInfo,
   title: expName
 }));
-
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
 psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.button === 'OK'); },flowScheduler, dialogCancelScheduler);
@@ -49,6 +48,9 @@ flowScheduler.add(experimentInit);
 flowScheduler.add(introRoutineBegin());
 flowScheduler.add(introRoutineEachFrame());
 flowScheduler.add(introRoutineEnd());
+if (typeof currentLoop === 'undefined') {
+    currentLoop = null;
+}
 const study_phaseLoopScheduler = new Scheduler(psychoJS);
 flowScheduler.add(study_phaseLoopBegin(study_phaseLoopScheduler));
 flowScheduler.add(study_phaseLoopScheduler);
@@ -378,6 +380,9 @@ function study_phaseLoopBegin(study_phaseLoopScheduler, snapshot) {
       trialList: 'condition.csv',
       seed: undefined, name: 'study_phase'
     });
+    if (typeof currentLoop === 'undefined') {
+        currentLoop = study_phase;
+    }
     psychoJS.experiment.addLoop(study_phase); // add the loop to the experiment
     currentLoop = study_phase;  // we're now the current loop
     
@@ -437,6 +442,9 @@ function recognition_phaseLoopBegin(recognition_phaseLoopScheduler, snapshot) {
       trialList: 'conditionON.csv',
       seed: undefined, name: 'recognition_phase'
     });
+    if (typeof currentLoop === 'undefined') {
+    currentLoop = recognition_phase;
+    }
     psychoJS.experiment.addLoop(recognition_phase); // add the loop to the experiment
     currentLoop = recognition_phase;  // we're now the current loop
     
@@ -1126,6 +1134,7 @@ function EndRoutineEnd(snapshot) {
     return Scheduler.Event.NEXT;
   }
 }
+console.log('Current Loop:', currentLoop);
 
 function importConditions(currentLoop) {
   return async function () {
