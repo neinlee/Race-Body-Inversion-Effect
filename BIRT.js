@@ -36,14 +36,18 @@ psychoJS.start({
         // 다른 리소스 추가
     ]
 });
-// PsychoJS 창 초기화 이후 frameDur 설정
+
+// PsychoJS 초기화 후 frameDur 계산
 psychoJS.schedule(() => {
-    psychoJS.window.callOnFlip(() => {
-        frameDur = 1.0 / psychoJS.window.getActualFrameRate();
-    });
+    if (psychoJS.window) {
+        psychoJS.window.callOnFlip(() => {
+            frameDur = 1.0 / psychoJS.window.getActualFrameRate();
+        });
+    } else {
+        console.error("PsychoJS window is not initialized.");
+    }
     return Scheduler.Event.NEXT;
 });
-
 // open window:
 psychoJS.openWindow({
   fullscr: true,
