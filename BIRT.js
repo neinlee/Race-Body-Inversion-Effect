@@ -15,6 +15,7 @@ let frameDur;  // 전역 변수로 선언
 let introClock;
 let intro_text;
 let press_enter_intro;
+let trialClock;
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
