@@ -101,7 +101,7 @@ const dialogCancelScheduler = new Scheduler(psychoJS);
 
 
 // Add routines to scheduler
-flowScheduler.add(updateInfo);
+// flowScheduler.add(updateInfo);
 flowScheduler.add(experimentInit);
 flowScheduler.add(() => introRoutineBegin());
 // Add other routines similarly...
