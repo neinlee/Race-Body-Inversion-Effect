@@ -235,7 +235,7 @@ async function experimentInit() {
   image = new visual.ImageStim({
     win : psychoJS.window,
     name : 'image', units : undefined, 
-    image : 'default.png', mask : undefined,
+    image : undefined, mask : undefined,
     anchor : 'center',
     ori : 1.0, 
     pos : [0, 0], 
