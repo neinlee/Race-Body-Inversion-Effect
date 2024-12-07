@@ -86,13 +86,25 @@ psychoJS.start({
 
 psychoJS.experimentLogger.setLevel(core.Logger.ServerLevel.INFO);
 
+// async function updateInfo() {
+// currentLoop = psychoJS.experiment;  // right now there are no loops
+//  expInfo['date'] = util.MonotonicClock.getDateStr();  // add a simple timestamp
+//  expInfo['expName'] = expName;
+//  expInfo['psychopyVersion'] = '2024.2.4';
+//  expInfo['OS'] = window.navigator.platform;
+    
 async function updateInfo() {
-  currentLoop = psychoJS.experiment;  // right now there are no loops
-  expInfo['date'] = util.MonotonicClock.getDateStr();  // add a simple timestamp
-  expInfo['expName'] = expName;
-  expInfo['psychopyVersion'] = '2024.2.4';
-  expInfo['OS'] = window.navigator.platform;
-
+    if (psychoJS.experiment && psychoJS.experiment.isRunning) {
+        currentLoop = psychoJS.experiment;  // Ensure there is a running experiment to reference
+    } else {
+        currentLoop = null;  // Handle the case where there are no active loops
+        console.log('No active loops to set as currentLoop.');
+    }
+    expInfo['date'] = util.MonotonicClock.getDateStr();  // add a simple timestamp
+    expInfo['expName'] = expName;
+    expInfo['psychopyVersion'] = '2024.2.4';
+    expInfo['OS'] = window.navigator.platform;
+}
 
   // store frame rate of monitor if we can measure it successfully
   expInfo['frameRate'] = psychoJS.window.getActualFrameRate();
