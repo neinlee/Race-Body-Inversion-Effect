@@ -34,7 +34,20 @@ const psychoJS = new PsychoJS({
 });
 
 let frameDur = 1.0 / 60.0; // 기본 프레임 지속 시간 (60 FPS)
+let fixation; // Declare globally
 
+async function experimentInit() {
+    // Initialize the fixation visual stimulus
+    fixation = new visual.TextStim({
+        win: psychoJS.window,
+        name: 'fixation',
+        text: '+',  // Typically a plus sign for fixation
+        pos: [0, 0],  // Centered on the screen
+        height: 0.1,  // Appropriate size for visibility
+        color: new util.Color('white'),  // Ensure contrast
+        opacity: 1
+    });
+}
 // PsychoJS 시작
 psychoJS.start({
     expName: expName,
@@ -77,6 +90,8 @@ psychoJS.schedule(psychoJS.gui.DlgFromDict({
 // 실험 스케줄러 초기화
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
+const flowScheduler = new Scheduler(psychoJS);
+
 
 // 대화 상자 결과에 따라 스케줄러 실행
 psychoJS.scheduleCondition(
@@ -91,6 +106,9 @@ flowScheduler.add(experimentInit);
 flowScheduler.add(introRoutineBegin());
 flowScheduler.add(introRoutineEachFrame());
 flowScheduler.add(introRoutineEnd());
+flowScheduler.add(trialRoutineBegin);
+flowScheduler.add(trialRoutineEachFrame);
+flowScheduler.add(trialRoutineEnd);
 const study_phaseLoopScheduler = new Scheduler(psychoJS);
 if (typeof recognition_phase === 'undefined') {
     recognition_phase = new TrialHandler({
@@ -424,6 +442,22 @@ function introRoutineEnd(snapshot) {
     }
     return Scheduler.Event.NEXT;
   }
+}
+function trialRoutineBegin() {
+    showFixation(); // Show the fixation at the start of the trial
+    return Scheduler.Event.NEXT;
+}
+function trialRoutineEachFrame() {
+    // Here, you might check for conditions to hide fixation, e.g., after a certain time
+    if (conditionToHideFixation) {
+        hideFixation(); // Hide the fixation based on some condition
+    }
+    return Scheduler.Event.FLIP_REPEAT;
+}
+
+function trialRoutineEnd() {
+    hideFixation(); // Ensure fixation is hidden at the end of the trial
+    return Scheduler.Event.NEXT;
 }
 
 function import_conditions(study_phaseLoopScheduler, snapshot) {
