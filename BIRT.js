@@ -258,11 +258,6 @@ function introRoutineEnd(snapshot) {
 
 
 
-function trialRoutineEnd() {
-    hideFixation(); // Ensure fixation is hidden at the end of the trial
-    return Scheduler.Event.NEXT;
-}
-
 function import_conditions(study_phaseLoopScheduler, snapshot) {
   return async function() {
     TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
