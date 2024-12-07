@@ -11,6 +11,12 @@ const { abs, sin, cos, PI: pi, sqrt } = Math;
 const { round } = util;
 
 var recognition_phase; // Declare recognition_phase as a global variable
+let trialClock = new util.Clock();  // Tracks time in trial routines
+let press_enter_intro = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock()});
+let responseClock = new util.Clock();  // Tracks response times
+let feedbackClock = new util.Clock();  // Tracks feedback display times
+let globalClock = new util.Clock();  // Tracks the total time since the start of the experiment
+let routineTimer = new util.CountdownTimer();  // General purpose countdown timer
 
 let introClock; // 루틴 시간 측정을 위한 변수
 let intro_text; 
