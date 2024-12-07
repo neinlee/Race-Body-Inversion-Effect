@@ -298,6 +298,7 @@ function introRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     introClock.reset();
+    intro_text.setAutoDraw(true);
     routineTimer.reset();
     introMaxDurationReached = false;
     // update component parameters for each repeat
@@ -388,6 +389,7 @@ function introRoutineEachFrame() {
 
 function introRoutineEnd(snapshot) {
   return async function () {
+    intro_text.setAutoDraw(false);
     //--- Ending Routine 'intro' ---
     for (const thisComponent of introComponents) {
       if (typeof thisComponent.setAutoDraw === 'function') {
