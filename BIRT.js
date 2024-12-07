@@ -98,14 +98,7 @@ let key_resp, press_enter, image, text;
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
 
-// Define functions
-function updateInfo() {
-    // Function body here...
-}
 
-function experimentInit() {
-    // Additional initialization if needed...
-}
 
 // Add routines to scheduler
 flowScheduler.add(updateInfo);
