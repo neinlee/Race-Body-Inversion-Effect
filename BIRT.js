@@ -125,7 +125,7 @@ psychoJS.startScheduler(flowScheduler);
 dialogCancelScheduler.add(quitPsychoJS, '감사합니다', false);
 
 // Quit and clean up after experiment ends
-psychoJS.quit({message: 'Thank you for your participation.', isCompleted: true});
+psychoJS.quit({message: '감사합니다', isCompleted: true});
 
 function introRoutineBegin(snapshot) {
   return async function () {
