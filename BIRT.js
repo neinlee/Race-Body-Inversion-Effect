@@ -256,13 +256,7 @@ function introRoutineEnd(snapshot) {
   }
 }
 
-function trialRoutineEachFrame() {
-    // Here, you might check for conditions to hide fixation, e.g., after a certain time
-    if (conditionToHideFixation) {
-        hideFixation(); // Hide the fixation based on some condition
-    }
-    return Scheduler.Event.FLIP_REPEAT;
-}
+
 
 function trialRoutineEnd() {
     hideFixation(); // Ensure fixation is hidden at the end of the trial
