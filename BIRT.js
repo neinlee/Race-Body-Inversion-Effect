@@ -12,6 +12,8 @@ const { round } = util;
 
 var recognition_phase; // Declare recognition_phase as a global variable
 
+let introClock; // 루틴 시간 측정을 위한 변수
+
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
 let expInfo = {
