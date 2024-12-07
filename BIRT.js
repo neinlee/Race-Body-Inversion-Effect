@@ -108,10 +108,15 @@ Promise.all([
   psychoJS.experiment.importConditions('condition.csv'),
   psychoJS.experiment.importConditions('conditionON.csv')
 ]).then(function() {
-  // CSV 파일에서 데이터 가져오기
-  let conditionData = psychoJS.experiment.getConditions('condition.csv');
-  let conditionONData = psychoJS.experiment.getConditions('conditionON.csv');
+  // 각 CSV 파일에서 데이터를 가져옵니다.
+  let conditionData = psychoJS.experiment.getConditions('condition.csv');  // condition.csv 데이터
+  let conditionONData = psychoJS.experiment.getConditions('conditionON.csv');  // conditionON.csv 데이터
   
+  if (!conditionData || !conditionONData) {
+    console.error("CSV 파일을 불러오는 데 실패했습니다.");
+    return; // 오류 처리 후 종료
+  }
+
   let imageResources = [];  // 동적으로 리소스를 담을 배열
 
   // condition.csv에서 이미지 경로 추출
