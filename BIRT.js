@@ -329,7 +329,8 @@ function introRoutineEachFrame() {
     t = introClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    
+    const keys = press_enter_intro.getKeys({ keyList: ['return'], waitRelease: false });
+
     // *intro_text* updates
     if (t >= 0.0 && intro_text.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
