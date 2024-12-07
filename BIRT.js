@@ -89,8 +89,8 @@ let EndClock = new util.Clock();
 let instructionClock = new util.Clock();
 let recognitionClock = new util.Clock();
 
-let intro_text, fixation, body, instruction_for_recognition, feedback_text, Outro;
-let press_enter_intro, key_resp, press_enter, image, text;
+let body, instruction_for_recognition, feedback_text, Outro;
+let key_resp, press_enter, image, text;
 
 // Initialize components for Routine "intro"
 intro_text = new visual.TextStim({
