@@ -87,28 +87,34 @@ psychoJS.schedule(psychoJS.gui.DlgFromDict({
     title: expName,
 }));
 
-// 실험 스케줄러 초기화
+// Declare globally at the top of your script
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
 
-
-// 대화 상자 결과에 따라 스케줄러 실행
+// Use flowScheduler throughout the script without redeclaring
 psychoJS.scheduleCondition(
     () => psychoJS.gui.dialogComponent.button === 'OK',
     flowScheduler,
     dialogCancelScheduler
 );
 
-// flowScheduler gets run if the participants presses OK
+// Add routines to flowScheduler
 flowScheduler.add(updateInfo); // add timeStamp
 flowScheduler.add(experimentInit);
-flowScheduler.add(introRoutineBegin());
-flowScheduler.add(introRoutineEachFrame());
-flowScheduler.add(introRoutineEnd());
+// Note: Avoid calling functions immediately when adding unless necessary
+flowScheduler.add(() => introRoutineBegin());
+flowScheduler.add(() => introRoutineEachFrame());
+flowScheduler.add(() => introRoutineEnd());
 flowScheduler.add(trialRoutineBegin);
 flowScheduler.add(trialRoutineEachFrame);
 flowScheduler.add(trialRoutineEnd);
+
 const study_phaseLoopScheduler = new Scheduler(psychoJS);
+flowScheduler.add(() => recognition_phase(study_phaseLoopScheduler));
+flowScheduler.add(study_phaseLoopScheduler);
+flowScheduler.add(study_phaseLoopEnd);
+
+// Ensure recognition_phase is properly handled
 if (typeof recognition_phase === 'undefined') {
     recognition_phase = new TrialHandler({
         psychoJS: psychoJS,
@@ -116,34 +122,30 @@ if (typeof recognition_phase === 'undefined') {
         method: TrialHandler.Method.RANDOM,
         extraInfo: expInfo,
         originPath: undefined,
-        trialList: 'conditionON.csv', // Replace with the correct condition file
+        trialList: 'conditionON.csv', // Make sure this file is loaded correctly
         seed: undefined,
         name: 'recognition_phase'
     });
+    console.log('recognition_phase initialized:', recognition_phase);
 }
-console.log('recognition_phase initialized:', recognition_phase);
-flowScheduler.add(recognition_phase(study_phaseLoopScheduler));
-flowScheduler.add(study_phaseLoopScheduler);
-flowScheduler.add(study_phaseLoopEnd);
 
+// Continue adding other routines
+flowScheduler.add(() => instructionRoutineBegin());
+flowScheduler.add(() => instructionRoutineEachFrame());
+flowScheduler.add(() => instructionRoutineEnd());
 
-flowScheduler.add(instructionRoutineBegin());
-flowScheduler.add(instructionRoutineEachFrame());
-flowScheduler.add(instructionRoutineEnd());
 const recognition_phaseLoopScheduler = new Scheduler(psychoJS);
-flowScheduler.add(recognition_phaseLoopBegin(recognition_phaseLoopScheduler));
+flowScheduler.add(() => recognition_phaseLoopBegin(recognition_phaseLoopScheduler));
 flowScheduler.add(recognition_phaseLoopScheduler);
 flowScheduler.add(recognition_phaseLoopEnd);
 
-
-
-flowScheduler.add(EndRoutineBegin());
-flowScheduler.add(EndRoutineEachFrame());
-flowScheduler.add(EndRoutineEnd());
-flowScheduler.add(quitPsychoJS, 'Thank you for your patience.', true);
+flowScheduler.add(EndRoutineBegin);
+flowScheduler.add(EndRoutineEachFrame);
+flowScheduler.add(EndRoutineEnd);
+flowScheduler.add(quitPsychoJS, '감사합니다', true);
 
 // quit if user presses Cancel in dialog box:
-dialogCancelScheduler.add(quitPsychoJS, 'Thank you for your patience.', false);
+dialogCancelScheduler.add(quitPsychoJS, '감사합니다', false);
 
 psychoJS.start({
   expName: expName,
