@@ -33,6 +33,7 @@ let globalClock;
 let routineTimer;
 let t;
 let frameN;
+let continueRoutine;
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
