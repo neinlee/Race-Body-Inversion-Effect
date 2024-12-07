@@ -12,7 +12,7 @@ const { round } = util;
 
 let currentLoop = null;  // 초기 값으로 null을 설정
 let frameDur;  // 전역 변수로 선언
-
+let introClock;
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
