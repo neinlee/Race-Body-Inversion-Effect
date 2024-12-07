@@ -36,9 +36,12 @@ psychoJS.start({
         // 다른 리소스 추가
     ]
 });
-// Update frame duration after initializing PsychoJS
-psychoJS.window.callOnFlip(() => {
-    frameDur = 1.0 / psychoJS.window.getActualFrameRate();
+// PsychoJS 창 초기화 이후 frameDur 설정
+psychoJS.schedule(() => {
+    psychoJS.window.callOnFlip(() => {
+        frameDur = 1.0 / psychoJS.window.getActualFrameRate();
+    });
+    return Scheduler.Event.NEXT;
 });
 
 // open window:
