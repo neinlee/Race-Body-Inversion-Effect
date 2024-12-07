@@ -25,7 +25,7 @@ let instruction_for_recognition;
 let text;
 let image;
 let key_resp;
-let feedback_Clock;
+let feedbackClock;
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
