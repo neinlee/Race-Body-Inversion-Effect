@@ -499,7 +499,8 @@ function trialRoutineBegin(snapshot) {
     routineTimer.add(4.000000);
     trialMaxDurationReached = false;
     // update component parameters for each repeat
-    body.setOri(180 if 'I' in condition else 0);
+    body.setOri('I' in condition ? 180 : 0);
+   // body.setOri(180 if 'I' in condition else 0);
     body.setImage(WMfileName);
     psychoJS.experiment.addData('trial.started', globalClock.getTime());
     trialMaxDuration = null
