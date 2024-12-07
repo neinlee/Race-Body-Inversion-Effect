@@ -27,14 +27,20 @@ if (typeof currentLoop === 'undefined') {
 const psychoJS = new PsychoJS({
   debug: true
 });
+let frameDur;
 psychoJS.start({
     expName: expName,
     expInfo: expInfo,
     resources: [
         { name: 'conditionON.csv', path: 'conditionON.csv' },
-        // 다른 리소스가 있다면 여기에 추가
+        // 다른 리소스 추가
     ]
 });
+// Update frame duration after initializing PsychoJS
+psychoJS.window.callOnFlip(() => {
+    frameDur = 1.0 / psychoJS.window.getActualFrameRate();
+});
+
 // open window:
 psychoJS.openWindow({
   fullscr: true,
