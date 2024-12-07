@@ -10,117 +10,232 @@ const { Scheduler } = util;
 const { abs, sin, cos, PI: pi, sqrt } = Math;
 const { round } = util;
 
-var recognition_phase; // Declare recognition_phase as a global variable
 
-//let introClock = new util.Clock(); // 루틴 시간 측정을 위한 변수
-//let trialClock = new util.Clock(); // Declaration and initialization at the top of the script
-
-let intro_text; 
-let press_enter_intro;
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
 let expInfo = {
     'participant': `${util.pad(Number.parseFloat(util.randint(0, 999999)).toFixed(0), 6)}`,
     'session': '001',
 };
-// Global initialization for currentLoop to prevent undefined errors
-if (typeof currentLoop === 'undefined') {
-    var currentLoop = null;
-}
+
 // Start code blocks for 'Before Experiment'
 // init psychoJS:
 const psychoJS = new PsychoJS({
-    debug: true,
+  debug: true
 });
 
-let frameDur = 1.0 / 60.0; // 기본 프레임 지속 시간 (60 FPS)
-let fixation; // Declare globally
-
-async function experimentInit() {
-    // Initialize the fixation visual stimulus
-    fixation = new visual.TextStim({
-        win: psychoJS.window,
-        name: 'fixation',
-        text: '+',  // Typically a plus sign for fixation
-        pos: [0, 0],  // Centered on the screen
-        height: 0.1,  // Appropriate size for visibility
-        color: new util.Color('white'),  // Ensure contrast
-        opacity: 1
-    });
-    if (!intro_text) {
-        intro_text = new visual.TextStim({
-            win: psychoJS.window,
-            name: 'intro_text',
-            text: '실험에 참가해주셔서 감사합니다.\n\n지금부터, 화면의 중앙에 하나씩 제시되는 얼굴들을 바라봐주세요.\n2분동안 20명의 사진이 제시됩니다.\n\n계속하려면 엔터Enter 키를 눌러주세요.',
-            font: 'Arial',
-            pos: [0, 0],  // Position at the center of the screen
-            height: 0.05,  // Appropriate text size
-            wrapWidth: undefined,
-            color: new util.Color('white'),  // Text color
-            opacity: 1
-        });
-    }
-}
-// Start PsychoJS and open the PsychoJS window
-psychoJS.start({
-    expName: expName,
-    expInfo: expInfo,
-    resources: [
-        { name: 'conditionON.csv', path: 'conditionON.csv' },
-        { name: 'condition.csv', path: 'condition.csv' },
-        { name: 'default.png', path: 'https://pavlovia.org/assets/default/default.png' }
-    ]
-});
-
+// open window:
 psychoJS.openWindow({
-    fullscr: true,
-    color: new util.Color([0, 0, 0]),
-    units: 'height',
-    waitBlanking: true
+  fullscr: true,
+  color: new util.Color([0,0,0]),
+  units: 'height',
+  waitBlanking: true,
+  backgroundImage: '',
+  backgroundFit: 'none',
 });
+// schedule the experiment:
+psychoJS.schedule(psychoJS.gui.DlgFromDict({
+  dictionary: expInfo,
+  title: expName
+}));
 
-// Initialize global variables and components
-let globalClock = new util.Clock();
-let routineTimer = new util.CountdownTimer();
-let introClock = new util.Clock();
-let trialClock = new util.Clock();
-let feedbackClock = new util.Clock();
-let EndClock = new util.Clock();
-let instructionClock = new util.Clock();
-let recognitionClock = new util.Clock();
-
-let body, instruction_for_recognition, feedback_text, Outro;
-let key_resp, press_enter, image, text;
-
-// More component initialization here...
-
-// Define and add routines to flowScheduler
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
+psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.button === 'OK'); },flowScheduler, dialogCancelScheduler);
 
-
-
-// Add routines to scheduler
-// flowScheduler.add(updateInfo);
+// flowScheduler gets run if the participants presses OK
+flowScheduler.add(updateInfo); // add timeStamp
 flowScheduler.add(experimentInit);
-flowScheduler.add(() => introRoutineBegin());
-// Add other routines similarly...
+flowScheduler.add(introRoutineBegin());
+flowScheduler.add(introRoutineEachFrame());
+flowScheduler.add(introRoutineEnd());
+const study_phaseLoopScheduler = new Scheduler(psychoJS);
+flowScheduler.add(study_phaseLoopBegin(study_phaseLoopScheduler));
+flowScheduler.add(study_phaseLoopScheduler);
+flowScheduler.add(study_phaseLoopEnd);
 
-// Schedule conditions based on dialog responses
-psychoJS.scheduleCondition(
-    () => psychoJS.gui.dialogComponent.button === 'OK',
-    flowScheduler,
-    dialogCancelScheduler
-);
 
-// Start the scheduler
-psychoJS.startScheduler(flowScheduler);
+flowScheduler.add(instructionRoutineBegin());
+flowScheduler.add(instructionRoutineEachFrame());
+flowScheduler.add(instructionRoutineEnd());
+const recognition_phaseLoopScheduler = new Scheduler(psychoJS);
+flowScheduler.add(recognition_phaseLoopBegin(recognition_phaseLoopScheduler));
+flowScheduler.add(recognition_phaseLoopScheduler);
+flowScheduler.add(recognition_phaseLoopEnd);
 
-// Quit if user presses Cancel in dialog box
-dialogCancelScheduler.add(quitPsychoJS, '감사합니다', false);
 
-// Quit and clean up after experiment ends
-psychoJS.quit({message: '감사합니다', isCompleted: true});
+
+flowScheduler.add(EndRoutineBegin());
+flowScheduler.add(EndRoutineEachFrame());
+flowScheduler.add(EndRoutineEnd());
+flowScheduler.add(quitPsychoJS, 'Thank you for your patience.', true);
+
+// quit if user presses Cancel in dialog box:
+dialogCancelScheduler.add(quitPsychoJS, 'Thank you for your patience.', false);
+
+psychoJS.start({
+  expName: expName,
+  expInfo: expInfo,
+  resources: [
+    // resources:
+    {'name': 'condition.csv', 'path': 'condition.csv'},
+    {'name': 'conditionON.csv', 'path': 'conditionON.csv'},
+    {'name': 'default.png', 'path': 'https://pavlovia.org/assets/default/default.png'},
+  ]
+});
+
+psychoJS.experimentLogger.setLevel(core.Logger.ServerLevel.INFO);
+
+async function updateInfo() {
+  currentLoop = psychoJS.experiment;  // right now there are no loops
+  expInfo['date'] = util.MonotonicClock.getDateStr();  // add a simple timestamp
+  expInfo['expName'] = expName;
+  expInfo['psychopyVersion'] = '2024.2.4';
+  expInfo['OS'] = window.navigator.platform;
+
+
+  // store frame rate of monitor if we can measure it successfully
+  expInfo['frameRate'] = psychoJS.window.getActualFrameRate();
+  if (typeof expInfo['frameRate'] !== 'undefined')
+    frameDur = 1.0 / Math.round(expInfo['frameRate']);
+  else
+    frameDur = 1.0 / 60.0; // couldn't get a reliable measure so guess
+
+  // add info from the URL:
+  util.addInfoFromUrl(expInfo);
+  
+
+  
+  psychoJS.experiment.dataFileName = (("." + "/") + `data/${expInfo["participant"]}_${expName}_${expInfo["date"]}`);
+  psychoJS.experiment.field_separator = '\t';
+
+
+  return Scheduler.Event.NEXT;
+}
+
+async function experimentInit() {
+  // Initialize components for Routine "intro"
+  introClock = new util.Clock();
+  intro_text = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'intro_text',
+    text: '실험에 참가해주셔서 감사합니다.\n\n지금부터, 화면의 중앙에 하나씩 제시되는 얼굴들을 바라봐주세요.\n2분동안 20명의 사진이 제시됩니다.\n\n계속하시려면 엔터Enter 키를 눌러주세요.',
+    font: 'Arial',
+    units: undefined, 
+    pos: [0, 0], draggable: false, height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    languageStyle: 'LTR',
+    color: new util.Color('white'),  opacity: undefined,
+    depth: 0.0 
+  });
+  
+  press_enter_intro = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
+  
+  // Initialize components for Routine "trial"
+  trialClock = new util.Clock();
+  fixation = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'fixation',
+    text: '+',
+    font: 'Arial',
+    units: undefined, 
+    pos: [0, 0], draggable: false, height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    languageStyle: 'LTR',
+    color: new util.Color('white'),  opacity: undefined,
+    depth: 0.0 
+  });
+  
+  body = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'body', units : undefined, 
+    image : 'default.png', mask : undefined,
+    anchor : 'center',
+    ori : 1.0, 
+    pos : [0, 0], 
+    draggable: false,
+    size : [0.6, 0.45],
+    color : new util.Color([1,1,1]), opacity : undefined,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -1.0 
+  });
+  // Initialize components for Routine "instruction"
+  instructionClock = new util.Clock();
+  instruction_for_recognition = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'instruction_for_recognition',
+    text: "다음부터는, \n제시되는 얼굴이 여러분이 방금까지 보았던 얼굴들 중에 있었다면 키보드의 'ㄹ(F)' 키를, \n처음 보는 새로운 얼굴이라면 'ㅓ(J)' 키를 눌러주세요.\n\n계속하려면 엔터(Enter) 키를 눌러주세요.",
+    font: 'Arial',
+    units: undefined, 
+    pos: [0, 0], draggable: false, height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    languageStyle: 'LTR',
+    color: new util.Color('white'),  opacity: undefined,
+    depth: 0.0 
+  });
+  
+  press_enter = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
+  
+  // Initialize components for Routine "recognition"
+  recognitionClock = new util.Clock();
+  text = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'text',
+    text: '+',
+    font: 'Arial',
+    units: undefined, 
+    pos: [0, 0], draggable: false, height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    languageStyle: 'LTR',
+    color: new util.Color('white'),  opacity: undefined,
+    depth: 0.0 
+  });
+  
+  image = new visual.ImageStim({
+    win : psychoJS.window,
+    name : 'image', units : undefined, 
+    image : 'default.png', mask : undefined,
+    anchor : 'center',
+    ori : 1.0, 
+    pos : [0, 0], 
+    draggable: false,
+    size : [0.6, 0.45],
+    color : new util.Color([1,1,1]), opacity : undefined,
+    flipHoriz : false, flipVert : false,
+    texRes : 128.0, interpolate : true, depth : -1.0 
+  });
+  key_resp = new core.Keyboard({psychoJS: psychoJS, clock: new util.Clock(), waitForStart: true});
+  
+  // Initialize components for Routine "feedback"
+  feedbackClock = new util.Clock();
+  feedback_text = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'feedback_text',
+    text: '',
+    font: 'Arial',
+    units: undefined, 
+    pos: [0, 0], draggable: false, height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    languageStyle: 'LTR',
+    color: new util.Color('white'),  opacity: undefined,
+    depth: 0.0 
+  });
+  
+  // Initialize components for Routine "End"
+  EndClock = new util.Clock();
+  Outro = new visual.TextStim({
+    win: psychoJS.window,
+    name: 'Outro',
+    text: '실험이 끝났습니다! \n결과가 저장되는 동안 기다려주세요\n\n지금까지 실험에 참여해주셔서 감사합니다. \n안녕히 가세요! ^~^/',
+    font: 'Arial',
+    units: undefined, 
+    pos: [0, 0], draggable: false, height: 0.05,  wrapWidth: undefined, ori: 0.0,
+    languageStyle: 'LTR',
+    color: new util.Color('white'),  opacity: undefined,
+    depth: 0.0 
+  });
+  
+  // Create some handy timers
+  globalClock = new util.Clock();  // to track the time since experiment started
+  routineTimer = new util.CountdownTimer();  // to track time remaining of each (non-slip) routine
+  
+  return Scheduler.Event.NEXT;
+}
 
 function introRoutineBegin(snapshot) {
   return async function () {
@@ -131,12 +246,9 @@ function introRoutineBegin(snapshot) {
     frameN = -1;
     continueRoutine = true; // until we're told otherwise
     introClock.reset();
-    intro_text.setAutoDraw(true);
     routineTimer.reset();
     introMaxDurationReached = false;
     // update component parameters for each repeat
-    press_enter_intro.clock.reset();
-    press_enter_intro.start();
     press_enter_intro.keys = undefined;
     press_enter_intro.rt = undefined;
     _press_enter_intro_allKeys = [];
@@ -161,8 +273,7 @@ function introRoutineEachFrame() {
     t = introClock.getTime();
     frameN = frameN + 1;// number of completed frames (so 0 is the first frame)
     // update/draw components on each frame
-    const keys = press_enter_intro.getKeys({ keyList: ['return'], waitRelease: false });
-
+    
     // *intro_text* updates
     if (t >= 0.0 && intro_text.status === PsychoJS.Status.NOT_STARTED) {
       // keep track of start time/frame for later
@@ -225,7 +336,6 @@ function introRoutineEachFrame() {
 
 function introRoutineEnd(snapshot) {
   return async function () {
-    intro_text.setAutoDraw(false);
     //--- Ending Routine 'intro' ---
     for (const thisComponent of introComponents) {
       if (typeof thisComponent.setAutoDraw === 'function') {
@@ -256,9 +366,7 @@ function introRoutineEnd(snapshot) {
   }
 }
 
-
-
-function import_conditions(study_phaseLoopScheduler, snapshot) {
+function study_phaseLoopBegin(study_phaseLoopScheduler, snapshot) {
   return async function() {
     TrialHandler.fromSnapshot(snapshot); // update internal variables (.thisN etc) of the loop
     
@@ -270,10 +378,6 @@ function import_conditions(study_phaseLoopScheduler, snapshot) {
       trialList: 'condition.csv',
       seed: undefined, name: 'study_phase'
     });
-    // Ensure currentLoop is defined and assigned
-    if (typeof currentLoop === 'undefined') {
-            currentLoop = study_phase; // Assign currentLoop to study_phase
-    }
     psychoJS.experiment.addLoop(study_phase); // add the loop to the experiment
     currentLoop = study_phase;  // we're now the current loop
     
@@ -333,9 +437,6 @@ function recognition_phaseLoopBegin(recognition_phaseLoopScheduler, snapshot) {
       trialList: 'conditionON.csv',
       seed: undefined, name: 'recognition_phase'
     });
-    if (typeof currentLoop === 'undefined') {
-    currentLoop = recognition_phase; // Assign currentLoop to recognition_phase
-    }
     psychoJS.experiment.addLoop(recognition_phase); // add the loop to the experiment
     currentLoop = recognition_phase;  // we're now the current loop
     
@@ -398,7 +499,7 @@ function trialRoutineBegin(snapshot) {
     routineTimer.add(4.000000);
     trialMaxDurationReached = false;
     // update component parameters for each repeat
-    body.setOri(condition.includes('I') ? 180 : 0);
+    body.setOri(180 if 'I' in condition else 0);
     body.setImage(WMfileName);
     psychoJS.experiment.addData('trial.started', globalClock.getTime());
     trialMaxDuration = null
@@ -640,7 +741,7 @@ function recognitionRoutineBegin(snapshot) {
     routineTimer.add(5.000000);
     recognitionMaxDurationReached = false;
     // update component parameters for each repeat
-    image.setOri(condition.includes('I') ? 180 : 0);
+    image.setOri(180 if 'I' in condition else 0);
     image.setImage(WMfileName);
     key_resp.keys = undefined;
     key_resp.rt = undefined;
@@ -1028,7 +1129,6 @@ function EndRoutineEnd(snapshot) {
 
 function importConditions(currentLoop) {
   return async function () {
-    console.log('Current Loop:', currentLoop);
     psychoJS.importAttributes(currentLoop.getCurrentTrial());
     return Scheduler.Event.NEXT;
     };
