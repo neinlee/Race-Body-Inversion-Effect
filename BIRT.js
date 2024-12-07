@@ -17,6 +17,7 @@ let intro_text;
 let press_enter;
 let press_enter_intro;
 let trialClock;
+let recognitionClock;
 let fixation;
 let body;
 let instructionClock;
