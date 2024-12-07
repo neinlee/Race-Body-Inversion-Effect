@@ -47,6 +47,19 @@ async function experimentInit() {
         color: new util.Color('white'),  // Ensure contrast
         opacity: 1
     });
+    if (!intro_text) {
+        intro_text = new visual.TextStim({
+            win: psychoJS.window,
+            name: 'intro_text',
+            text: '실험에 참가해주셔서 감사합니다.\n\n지금부터, 화면의 중앙에 하나씩 제시되는 얼굴들을 바라봐주세요.\n2분동안 20명의 사진이 제시됩니다.\n\n계속하려면 엔터Enter 키를 눌러주세요.',
+            font: 'Arial',
+            pos: [0, 0],  // Position at the center of the screen
+            height: 0.05,  // Appropriate text size
+            wrapWidth: undefined,
+            color: new util.Color('white'),  // Text color
+            opacity: 1
+        });
+    }
 }
 // Start PsychoJS and open the PsychoJS window
 psychoJS.start({
