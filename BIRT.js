@@ -19,6 +19,7 @@ let trialClock;
 let fixation;
 let body;
 let instructionClock;
+let instruction_for_recognition;
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
