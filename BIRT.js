@@ -444,6 +444,9 @@ function recognition_phaseLoopBegin(recognition_phaseLoopScheduler, snapshot) {
       trialList: 'conditionON.csv',
       seed: undefined, name: 'recognition_phase'
     });
+    if (typeof currentLoop === 'undefined') {
+    currentLoop = recognition_phase; // Assign currentLoop to recognition_phase
+    }
     psychoJS.experiment.addLoop(recognition_phase); // add the loop to the experiment
     currentLoop = recognition_phase;  // we're now the current loop
     
