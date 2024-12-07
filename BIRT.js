@@ -19,7 +19,7 @@ let expInfo = {
 };
 // Global initialization for currentLoop to prevent undefined errors
 if (typeof currentLoop === 'undefined') {
-    currentLoop = null;
+    var currentLoop = null;
 }
 // Start code blocks for 'Before Experiment'
 // init psychoJS:
