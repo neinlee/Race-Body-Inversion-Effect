@@ -48,11 +48,13 @@ let expInfo = {
     'session': '001',
 };
 
+
 // Start code blocks for 'Before Experiment'
 // init psychoJS:
 const psychoJS = new PsychoJS({
   debug: true
 });
+
 
 // open window:
 psychoJS.openWindow({
@@ -189,7 +191,7 @@ async function experimentInit() {
   body = new visual.ImageStim({
     win : psychoJS.window,
     name : 'body', units : undefined, 
-    image : 'default.png', mask : undefined,
+    image : undefined, mask : undefined,
     anchor : 'center',
     ori : 1.0, 
     pos : [0, 0], 
@@ -199,6 +201,7 @@ async function experimentInit() {
     flipHoriz : false, flipVert : false,
     texRes : 128.0, interpolate : true, depth : -1.0 
   });
+    
   // Initialize components for Routine "instruction"
   instructionClock = new util.Clock();
   instruction_for_recognition = new visual.TextStim({
