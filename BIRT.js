@@ -187,7 +187,7 @@ async function experimentInit() {
   
   // Initialize components for Routine "trial"
   trialClock = new util.Clock();
-  fixation = new visual.TextStim({
+  let fixation = new visual.TextStim({
     win: psychoJS.window,
     name: 'fixation',
     text: '+',
