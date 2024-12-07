@@ -39,6 +39,7 @@ let _press_enter_intro_allKeys;
 let introMaxDuration;
 let introComponents;
 let study_phase;
+let trialMaxDurationReached;
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
