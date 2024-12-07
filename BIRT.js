@@ -31,6 +31,7 @@ let EndClock;
 let Outro;
 let globalClock;
 let routineTimer;
+let t;
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
