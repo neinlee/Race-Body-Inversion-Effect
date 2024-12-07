@@ -255,10 +255,7 @@ function introRoutineEnd(snapshot) {
     return Scheduler.Event.NEXT;
   }
 }
-function trialRoutineBegin() {
-    showFixation(); // Show the fixation at the start of the trial
-    return Scheduler.Event.NEXT;
-}
+
 function trialRoutineEachFrame() {
     // Here, you might check for conditions to hide fixation, e.g., after a certain time
     if (conditionToHideFixation) {
