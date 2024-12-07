@@ -13,6 +13,8 @@ const { round } = util;
 var recognition_phase; // Declare recognition_phase as a global variable
 
 let introClock; // 루틴 시간 측정을 위한 변수
+let trialClock = new util.Clock(); // Declaration and initialization at the top of the script
+
 let intro_text; 
 let press_enter_intro;
 // store info about the experiment session:
