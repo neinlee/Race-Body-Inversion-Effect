@@ -27,7 +27,14 @@ if (typeof currentLoop === 'undefined') {
 const psychoJS = new PsychoJS({
   debug: true
 });
-
+psychoJS.start({
+    expName: expName,
+    expInfo: expInfo,
+    resources: [
+        { name: 'conditionON.csv', path: 'conditionON.csv' },
+        // 다른 리소스가 있다면 여기에 추가
+    ]
+});
 // open window:
 psychoJS.openWindow({
   fullscr: true,
