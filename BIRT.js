@@ -742,7 +742,8 @@ function recognitionRoutineBegin(snapshot) {
     routineTimer.add(5.000000);
     recognitionMaxDurationReached = false;
     // update component parameters for each repeat
-    image.setOri(180 if 'I' in condition else 0);
+    image.setOri('I' in condition ? 180 : 0);
+    // image.setOri(180 if 'I' in condition else 0);
     image.setImage(WMfileName);
     key_resp.keys = undefined;
     key_resp.rt = undefined;
