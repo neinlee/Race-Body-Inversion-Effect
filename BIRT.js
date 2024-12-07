@@ -90,7 +90,6 @@ psychoJS.schedule(psychoJS.gui.DlgFromDict({
 // 실험 스케줄러 초기화
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
-const flowScheduler = new Scheduler(psychoJS);
 
 
 // 대화 상자 결과에 따라 스케줄러 실행
