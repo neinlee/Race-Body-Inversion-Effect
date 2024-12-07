@@ -25,16 +25,29 @@ if (typeof currentLoop === 'undefined') {
 // Start code blocks for 'Before Experiment'
 // init psychoJS:
 const psychoJS = new PsychoJS({
-  debug: true
+    debug: true,
 });
-let frameDur;
+
+let frameDur = 1.0 / 60.0; // 기본 프레임 지속 시간 (60 FPS)
+
+// PsychoJS 시작
 psychoJS.start({
     expName: expName,
     expInfo: expInfo,
     resources: [
         { name: 'conditionON.csv', path: 'conditionON.csv' },
         // 다른 리소스 추가
-    ]
+    ],
+});
+
+// PsychoJS 윈도우 열기
+psychoJS.openWindow({
+    fullscr: true,
+    color: new util.Color([0, 0, 0]),
+    units: 'height',
+    waitBlanking: true,
+    backgroundImage: '',
+    backgroundFit: 'none',
 });
 
 // PsychoJS 초기화 후 frameDur 계산
@@ -42,30 +55,30 @@ psychoJS.schedule(() => {
     if (psychoJS.window) {
         psychoJS.window.callOnFlip(() => {
             frameDur = 1.0 / psychoJS.window.getActualFrameRate();
+            console.log(`Frame duration calculated: ${frameDur}s`);
         });
     } else {
         console.error("PsychoJS window is not initialized.");
     }
     return Scheduler.Event.NEXT;
 });
-// open window:
-psychoJS.openWindow({
-  fullscr: true,
-  color: new util.Color([0,0,0]),
-  units: 'height',
-  waitBlanking: true,
-  backgroundImage: '',
-  backgroundFit: 'none',
-});
-// schedule the experiment:
+
+// 실험 시작 전 GUI 대화 상자 표시
 psychoJS.schedule(psychoJS.gui.DlgFromDict({
-  dictionary: expInfo,
-  title: expName
+    dictionary: expInfo,
+    title: expName,
 }));
 
+// 실험 스케줄러 초기화
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
-psychoJS.scheduleCondition(function() { return (psychoJS.gui.dialogComponent.button === 'OK'); },flowScheduler, dialogCancelScheduler);
+
+// 대화 상자 결과에 따라 스케줄러 실행
+psychoJS.scheduleCondition(
+    () => psychoJS.gui.dialogComponent.button === 'OK',
+    flowScheduler,
+    dialogCancelScheduler
+);
 
 // flowScheduler gets run if the participants presses OK
 flowScheduler.add(updateInfo); // add timeStamp
