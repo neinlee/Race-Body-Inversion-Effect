@@ -54,6 +54,19 @@ flowScheduler.add(introRoutineBegin());
 flowScheduler.add(introRoutineEachFrame());
 flowScheduler.add(introRoutineEnd());
 const study_phaseLoopScheduler = new Scheduler(psychoJS);
+if (typeof recognition_phase === 'undefined') {
+    recognition_phase = new TrialHandler({
+        psychoJS: psychoJS,
+        nReps: 1,
+        method: TrialHandler.Method.RANDOM,
+        extraInfo: expInfo,
+        originPath: undefined,
+        trialList: 'conditionON.csv', // Replace with the correct condition file
+        seed: undefined,
+        name: 'recognition_phase'
+    });
+}
+console.log('recognition_phase initialized:', recognition_phase);
 flowScheduler.add(recognition_phase(study_phaseLoopScheduler));
 flowScheduler.add(study_phaseLoopScheduler);
 flowScheduler.add(study_phaseLoopEnd);
