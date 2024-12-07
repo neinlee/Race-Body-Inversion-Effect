@@ -14,6 +14,7 @@ let currentLoop = null;  // 초기 값으로 null을 설정
 let frameDur;  // 전역 변수로 선언
 let introClock;
 let intro_text;
+let press_enter;
 let press_enter_intro;
 let trialClock;
 let fixation;
