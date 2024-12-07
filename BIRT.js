@@ -14,6 +14,7 @@ var recognition_phase; // Declare recognition_phase as a global variable
 
 let introClock; // 루틴 시간 측정을 위한 변수
 let intro_text; 
+let press_enter_intro;
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
 let expInfo = {
@@ -302,6 +303,8 @@ function introRoutineBegin(snapshot) {
     routineTimer.reset();
     introMaxDurationReached = false;
     // update component parameters for each repeat
+    press_enter_intro.clock.reset();
+    press_enter_intro.start();
     press_enter_intro.keys = undefined;
     press_enter_intro.rt = undefined;
     _press_enter_intro_allKeys = [];
