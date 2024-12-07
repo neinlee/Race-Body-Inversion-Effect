@@ -36,6 +36,7 @@ let frameN;
 let continueRoutine;
 let introMaxDurationReached;
 let _press_enter_intro_allKeys;
+let introMaxDuration;
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
