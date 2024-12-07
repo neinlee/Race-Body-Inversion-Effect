@@ -103,37 +103,6 @@ flowScheduler.add(quitPsychoJS, 'Thank you for your patience.', true);
 // quit if user presses Cancel in dialog box:
 dialogCancelScheduler.add(quitPsychoJS, 'Thank you for your patience.', false);
 
-// 두 개의 CSV 파일을 불러와서 리소스를 동적으로 추가
-Promise.all([
-  psychoJS.experiment.importConditions('condition.csv'),
-  psychoJS.experiment.importConditions('conditionON.csv')
-]).then(function() {
-  // 각 CSV 파일에서 데이터를 가져옵니다.
-  let conditionData = psychoJS.experiment.getConditions('condition.csv');  // condition.csv 데이터
-  let conditionONData = psychoJS.experiment.getConditions('conditionON.csv');  // conditionON.csv 데이터
-  
-  if (!conditionData || !conditionONData) {
-    console.error("CSV 파일을 불러오는 데 실패했습니다.");
-    return; // 오류 처리 후 종료
-  }
-
-  let imageResources = [];  // 동적으로 리소스를 담을 배열
-
-  // condition.csv에서 이미지 경로 추출
-  conditionData.forEach((condition) => {
-    let imagePath = condition.WMfileName;  // 예: 'Old/7_EAMA6'
-    if (imagePath) {
-      imageResources.push({ name: imagePath, path: imagePath });
-    }
-  });
-
-  // conditionON.csv에서 이미지 경로 추출
-  conditionONData.forEach((condition) => {
-    let imagePath = condition.WMfileName;  // 예: 'Old/8_EAMA7'
-    if (imagePath) {
-      imageResources.push({ name: imagePath, path: imagePath });
-    }
-  });
 
 psychoJS.start({
   expName: expName,
@@ -141,8 +110,7 @@ psychoJS.start({
   resources: [
     // resources:
     {'name': 'condition.csv', 'path': 'condition.csv'},
-    {'name': 'conditionON.csv', 'path': 'conditionON.csv'},
-    {'name': 'default.png', 'path': 'https://pavlovia.org/assets/default/default.png'},
+    {'name': 'conditionON.csv', 'path': 'conditionON.csv'}
   ]
 });
 
