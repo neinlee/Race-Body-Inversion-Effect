@@ -10,6 +10,7 @@ const { Scheduler } = util;
 const { abs, sin, cos, PI: pi, sqrt } = Math;
 const { round } = util;
 
+var recognition_phase; // Declare recognition_phase as a global variable
 
 // store info about the experiment session:
 let expName = 'BIRT';  // from the Builder filename that created this script
