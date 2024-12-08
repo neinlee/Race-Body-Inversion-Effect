@@ -129,6 +129,7 @@ psychoJS.start({
     { name: 'Old/1_EAFA6', path: 'Old/1_EAFA6' },
     { name: 'Old/4_SEAMA6', path: 'Old/4_SEAMA6' },
     { name: 'Old/2_SEAMA6', path: 'Old/2_SEAMA6' },
+    { name: 'default.png', path: 'https://pavlovia.org/assets/default/default.png' }
   ]
 });
 
@@ -207,7 +208,7 @@ async function experimentInit() {
   body = new visual.ImageStim({
     win : psychoJS.window,
     name : 'body', units : undefined, 
-    image : undefined, mask : undefined,
+    image : 'default.png', mask : undefined,
     anchor : 'center',
     ori : 1.0, 
     pos : [0, 0], 
@@ -251,7 +252,7 @@ async function experimentInit() {
   image = new visual.ImageStim({
     win : psychoJS.window,
     name : 'image', units : undefined, 
-    image : undefined, mask : undefined,
+    image : 'default.png', mask : undefined,
     anchor : 'center',
     ori : 1.0, 
     pos : [0, 0], 
