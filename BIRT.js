@@ -111,8 +111,8 @@ psychoJS.start({
   expInfo: expInfo,
   resources: [
     // resources:
-    {'name': 'condition.csv', 'path': 'condition.csv'},
-    {'name': 'conditionON.csv', 'path': 'conditionON.csv'},
+    { name: 'condition.csv', path: 'condition.csv'},
+    { name: 'conditionON.csv', path: 'conditionON.csv'},
     { name: '5_EAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/blob/main/Old/5_EAMA6.jpg' },
     { name: '1_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/1_SEAMA6.jpg' },
     { name: '2_EAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/2_EAMA6.jpg' },
