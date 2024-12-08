@@ -128,9 +128,11 @@ psychoJS.start({
     { name: '5_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/5_SEAMA6.jpg' },
     { name: '1_EAFA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/1_EAFA6.jpg' },
     { name: '4_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/4_SEAMA6.jpg' },
-    { name: '2_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/2_SEAMA6.jpg' }
-  //  { name: 'default.png', path: 'https://pavlovia.org/assets/default/default.png' }
-  ]
+    { name: '2_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/2_SEAMA6.jpg' },
+    { name: 'default.png', path: 'https://pavlovia.org/assets/default/default.png' }
+
+  ], 
+  uploadData: false  // Pavlovia 업로드를 명시적으로 끄기
 });
 
 psychoJS.experimentLogger.setLevel(core.Logger.ServerLevel.INFO);
