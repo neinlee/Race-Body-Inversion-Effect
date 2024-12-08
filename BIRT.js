@@ -112,7 +112,23 @@ psychoJS.start({
   resources: [
     // resources:
     {'name': 'condition.csv', 'path': 'condition.csv'},
-    {'name': 'conditionON.csv', 'path': 'conditionON.csv'}
+    {'name': 'conditionON.csv', 'path': 'conditionON.csv'},
+    { name: 'Old/5_EAMA6', path: 'Old/5_EAMA6' },
+    { name: 'Old/1_SEAMA6', path: 'Old/1_SEAMA6' },
+    { name: 'Old/2_EAMA6', path: 'Old/2_EAMA6' },
+    { name: 'Old/6_SEAFA6', path: 'Old/6_SEAFA6' },
+    { name: 'Old/10_EAFA6', path: 'Old/10_EAFA6' },
+    { name: 'Old/2_SEAFA6', path: 'Old/2_SEAFA6' },
+    { name: 'Old/6_EAFA6', path: 'Old/6_EAFA6' },
+    { name: 'Old/7_SEAFA6', path: 'Old/7_SEAFA6' },
+    { name: 'Old/3_EAFA6', path: 'Old/3_EAFA6' },
+    { name: 'Old/4_SEAFA6', path: 'Old/4_SEAFA6' },
+    { name: 'Old/6_EAMA6', path: 'Old/6_EAMA6' },
+    { name: 'Old/7_EAMA6', path: 'Old/7_EAMA6' },
+    { name: 'Old/5_SEAMA6', path: 'Old/5_SEAMA6' },
+    { name: 'Old/1_EAFA6', path: 'Old/1_EAFA6' },
+    { name: 'Old/4_SEAMA6', path: 'Old/4_SEAMA6' },
+    { name: 'Old/2_SEAMA6', path: 'Old/2_SEAMA6' },
   ]
 });
 
