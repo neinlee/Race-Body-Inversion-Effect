@@ -128,8 +128,8 @@ psychoJS.start({
     { name: '5_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/5_SEAMA6.jpg' },
     { name: '1_EAFA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/1_EAFA6.jpg' },
     { name: '4_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/4_SEAMA6.jpg' },
-    { name: '2_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/2_SEAMA6.jpg' },
-    { name: 'default.png', path: 'https://pavlovia.org/assets/default/default.png' }
+    { name: '2_SEAMA6', path: 'https://github.com/neinlee/Race-Body-Inversion-Effect/main/Old/2_SEAMA6.jpg' }
+  //  { name: 'default.png', path: 'https://pavlovia.org/assets/default/default.png' }
   ]
 });
 
@@ -208,7 +208,7 @@ async function experimentInit() {
   body = new visual.ImageStim({
     win : psychoJS.window,
     name : 'body', units : undefined, 
-    image : 'default.png', mask : undefined,
+    image : undefined , mask : undefined,
     anchor : 'center',
     ori : 1.0, 
     pos : [0, 0], 
@@ -252,7 +252,7 @@ async function experimentInit() {
   image = new visual.ImageStim({
     win : psychoJS.window,
     name : 'image', units : undefined, 
-    image : 'default.png', mask : undefined,
+    image : undefined, mask : undefined,
     anchor : 'center',
     ori : 1.0, 
     pos : [0, 0], 
